@@ -297,6 +297,7 @@
             this.btnAddUpdate.TabIndex = 27;
             this.btnAddUpdate.Text = "Save (Add/Update)";
             this.btnAddUpdate.UseVisualStyleBackColor = true;
+            this.btnAddUpdate.Click += new System.EventHandler(this.btnAddUpdate_Click);
             // 
             // gpbMessages
             // 
