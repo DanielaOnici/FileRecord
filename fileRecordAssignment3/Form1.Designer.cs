@@ -57,10 +57,10 @@
             this.btnEmptyFile = new System.Windows.Forms.Button();
             this.btnAddUpdate = new System.Windows.Forms.Button();
             this.gpbMessages = new System.Windows.Forms.GroupBox();
-            this.lblErrorMessageOne = new System.Windows.Forms.Label();
-            this.lblErrorMessageTwo = new System.Windows.Forms.Label();
-            this.lblErrorMessageThree = new System.Windows.Forms.Label();
             this.lblErrorMessageFour = new System.Windows.Forms.Label();
+            this.lblErrorMessageThree = new System.Windows.Forms.Label();
+            this.lblErrorMessageTwo = new System.Windows.Forms.Label();
+            this.lblErrorMessageOne = new System.Windows.Forms.Label();
             this.gpbMessages.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -284,7 +284,7 @@
             // 
             this.btnEmptyFile.Location = new System.Drawing.Point(139, 603);
             this.btnEmptyFile.Name = "btnEmptyFile";
-            this.btnEmptyFile.Size = new System.Drawing.Size(662, 21);
+            this.btnEmptyFile.Size = new System.Drawing.Size(662, 31);
             this.btnEmptyFile.TabIndex = 26;
             this.btnEmptyFile.Text = "Empty File";
             this.btnEmptyFile.UseVisualStyleBackColor = true;
@@ -311,21 +311,13 @@
             this.gpbMessages.TabStop = false;
             this.gpbMessages.Text = "Messages";
             // 
-            // lblErrorMessageOne
+            // lblErrorMessageFour
             // 
-            this.lblErrorMessageOne.AutoSize = true;
-            this.lblErrorMessageOne.Location = new System.Drawing.Point(31, 36);
-            this.lblErrorMessageOne.Name = "lblErrorMessageOne";
-            this.lblErrorMessageOne.Size = new System.Drawing.Size(0, 15);
-            this.lblErrorMessageOne.TabIndex = 0;
-            // 
-            // lblErrorMessageTwo
-            // 
-            this.lblErrorMessageTwo.AutoSize = true;
-            this.lblErrorMessageTwo.Location = new System.Drawing.Point(31, 61);
-            this.lblErrorMessageTwo.Name = "lblErrorMessageTwo";
-            this.lblErrorMessageTwo.Size = new System.Drawing.Size(0, 15);
-            this.lblErrorMessageTwo.TabIndex = 1;
+            this.lblErrorMessageFour.AutoSize = true;
+            this.lblErrorMessageFour.Location = new System.Drawing.Point(31, 116);
+            this.lblErrorMessageFour.Name = "lblErrorMessageFour";
+            this.lblErrorMessageFour.Size = new System.Drawing.Size(0, 15);
+            this.lblErrorMessageFour.TabIndex = 3;
             // 
             // lblErrorMessageThree
             // 
@@ -335,19 +327,27 @@
             this.lblErrorMessageThree.Size = new System.Drawing.Size(0, 15);
             this.lblErrorMessageThree.TabIndex = 2;
             // 
-            // lblErrorMessageFour
+            // lblErrorMessageTwo
             // 
-            this.lblErrorMessageFour.AutoSize = true;
-            this.lblErrorMessageFour.Location = new System.Drawing.Point(31, 116);
-            this.lblErrorMessageFour.Name = "lblErrorMessageFour";
-            this.lblErrorMessageFour.Size = new System.Drawing.Size(0, 15);
-            this.lblErrorMessageFour.TabIndex = 3;
+            this.lblErrorMessageTwo.AutoSize = true;
+            this.lblErrorMessageTwo.Location = new System.Drawing.Point(31, 61);
+            this.lblErrorMessageTwo.Name = "lblErrorMessageTwo";
+            this.lblErrorMessageTwo.Size = new System.Drawing.Size(0, 15);
+            this.lblErrorMessageTwo.TabIndex = 1;
+            // 
+            // lblErrorMessageOne
+            // 
+            this.lblErrorMessageOne.AutoSize = true;
+            this.lblErrorMessageOne.Location = new System.Drawing.Point(31, 36);
+            this.lblErrorMessageOne.Name = "lblErrorMessageOne";
+            this.lblErrorMessageOne.Size = new System.Drawing.Size(0, 15);
+            this.lblErrorMessageOne.TabIndex = 0;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1238, 636);
+            this.ClientSize = new System.Drawing.Size(1238, 646);
             this.Controls.Add(this.gpbMessages);
             this.Controls.Add(this.btnAddUpdate);
             this.Controls.Add(this.btnEmptyFile);
