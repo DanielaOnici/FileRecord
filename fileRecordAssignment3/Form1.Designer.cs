@@ -40,7 +40,7 @@
             this.txtbLastName = new System.Windows.Forms.TextBox();
             this.txtbDateRegistered = new System.Windows.Forms.TextBox();
             this.txtbNumberClasses = new System.Windows.Forms.TextBox();
-            this.txtTotalPerClass = new System.Windows.Forms.TextBox();
+            this.txtbTotalPerClass = new System.Windows.Forms.TextBox();
             this.txtbTotalPaid = new System.Windows.Forms.TextBox();
             this.txtbTotalAllClasses = new System.Windows.Forms.TextBox();
             this.txtbAmountOut = new System.Windows.Forms.TextBox();
@@ -68,7 +68,7 @@
             // 
             this.rtxtbRecords.Location = new System.Drawing.Point(29, 107);
             this.rtxtbRecords.Name = "rtxtbRecords";
-            this.rtxtbRecords.Size = new System.Drawing.Size(1186, 255);
+            this.rtxtbRecords.Size = new System.Drawing.Size(1325, 255);
             this.rtxtbRecords.TabIndex = 0;
             this.rtxtbRecords.Text = "";
             // 
@@ -162,12 +162,12 @@
             this.txtbNumberClasses.Size = new System.Drawing.Size(228, 23);
             this.txtbNumberClasses.TabIndex = 11;
             // 
-            // txtTotalPerClass
+            // txtbTotalPerClass
             // 
-            this.txtTotalPerClass.Location = new System.Drawing.Point(139, 542);
-            this.txtTotalPerClass.Name = "txtTotalPerClass";
-            this.txtTotalPerClass.Size = new System.Drawing.Size(228, 23);
-            this.txtTotalPerClass.TabIndex = 12;
+            this.txtbTotalPerClass.Location = new System.Drawing.Point(139, 542);
+            this.txtbTotalPerClass.Name = "txtbTotalPerClass";
+            this.txtbTotalPerClass.Size = new System.Drawing.Size(228, 23);
+            this.txtbTotalPerClass.TabIndex = 12;
             // 
             // txtbTotalPaid
             // 
@@ -307,15 +307,16 @@
             this.gpbMessages.Controls.Add(this.lblErrorMessageOne);
             this.gpbMessages.Location = new System.Drawing.Point(839, 385);
             this.gpbMessages.Name = "gpbMessages";
-            this.gpbMessages.Size = new System.Drawing.Size(376, 151);
+            this.gpbMessages.Size = new System.Drawing.Size(515, 151);
             this.gpbMessages.TabIndex = 28;
             this.gpbMessages.TabStop = false;
             this.gpbMessages.Text = "Messages";
+            this.gpbMessages.Enter += new System.EventHandler(this.gpbMessages_Enter);
             // 
             // lblErrorMessageFour
             // 
             this.lblErrorMessageFour.AutoSize = true;
-            this.lblErrorMessageFour.Location = new System.Drawing.Point(31, 116);
+            this.lblErrorMessageFour.Location = new System.Drawing.Point(6, 104);
             this.lblErrorMessageFour.Name = "lblErrorMessageFour";
             this.lblErrorMessageFour.Size = new System.Drawing.Size(0, 15);
             this.lblErrorMessageFour.TabIndex = 3;
@@ -323,7 +324,7 @@
             // lblErrorMessageThree
             // 
             this.lblErrorMessageThree.AutoSize = true;
-            this.lblErrorMessageThree.Location = new System.Drawing.Point(31, 88);
+            this.lblErrorMessageThree.Location = new System.Drawing.Point(6, 76);
             this.lblErrorMessageThree.Name = "lblErrorMessageThree";
             this.lblErrorMessageThree.Size = new System.Drawing.Size(0, 15);
             this.lblErrorMessageThree.TabIndex = 2;
@@ -331,7 +332,7 @@
             // lblErrorMessageTwo
             // 
             this.lblErrorMessageTwo.AutoSize = true;
-            this.lblErrorMessageTwo.Location = new System.Drawing.Point(31, 61);
+            this.lblErrorMessageTwo.Location = new System.Drawing.Point(6, 49);
             this.lblErrorMessageTwo.Name = "lblErrorMessageTwo";
             this.lblErrorMessageTwo.Size = new System.Drawing.Size(0, 15);
             this.lblErrorMessageTwo.TabIndex = 1;
@@ -339,7 +340,7 @@
             // lblErrorMessageOne
             // 
             this.lblErrorMessageOne.AutoSize = true;
-            this.lblErrorMessageOne.Location = new System.Drawing.Point(31, 36);
+            this.lblErrorMessageOne.Location = new System.Drawing.Point(6, 24);
             this.lblErrorMessageOne.Name = "lblErrorMessageOne";
             this.lblErrorMessageOne.Size = new System.Drawing.Size(0, 15);
             this.lblErrorMessageOne.TabIndex = 0;
@@ -348,7 +349,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1238, 646);
+            this.ClientSize = new System.Drawing.Size(1366, 646);
             this.Controls.Add(this.gpbMessages);
             this.Controls.Add(this.btnAddUpdate);
             this.Controls.Add(this.btnEmptyFile);
@@ -365,7 +366,7 @@
             this.Controls.Add(this.txtbAmountOut);
             this.Controls.Add(this.txtbTotalAllClasses);
             this.Controls.Add(this.txtbTotalPaid);
-            this.Controls.Add(this.txtTotalPerClass);
+            this.Controls.Add(this.txtbTotalPerClass);
             this.Controls.Add(this.txtbNumberClasses);
             this.Controls.Add(this.txtbDateRegistered);
             this.Controls.Add(this.txtbLastName);
@@ -401,7 +402,7 @@
         private TextBox txtbLastName;
         private TextBox txtbDateRegistered;
         private TextBox txtbNumberClasses;
-        private TextBox txtTotalPerClass;
+        private TextBox txtbTotalPerClass;
         private TextBox txtbTotalPaid;
         private TextBox txtbTotalAllClasses;
         private TextBox txtbAmountOut;

@@ -86,10 +86,11 @@ namespace fileRecordAssignment3
 
         private void btnAddUpdate_Click(object sender, EventArgs e)
         {
-            string firstName = "", lastName = "";
+            string firstName = "", lastName = "", numberOfClasses = "", totalPerClass = "", totalAllClasses = "", totalAmountPaid = "";
+            int numberClasses, perClass, totalClasses, totalPaid;
 
             //Verifying if the First Name is valid
-            if(ValidationHelper.ValidateName(txtbFirstName.Text.Trim()) == true)
+            if (ValidationHelper.ValidateName(txtbFirstName.Text.Trim()) == true)
             {
                 firstName = ValidationHelper.Capitalize(txtbFirstName.Text.Trim());
             }
@@ -98,6 +99,116 @@ namespace fileRecordAssignment3
                 //When it is not, an error message is shown
                 ErrorMessage("Invalid first name. Minimum 2 characters. No number or special characters are valid.", txtbFirstName);
             }
+
+            //Verifying if the Last Name is valid
+            if (ValidationHelper.ValidateName(txtbLastName.Text.Trim()) == true)
+            {
+                lastName = ValidationHelper.Capitalize(txtbLastName.Text.Trim());
+            }
+            else
+            {
+                //When it is not, an error message is shown
+                ErrorMessage("Invalid last name. Minimum 2 characters. No number or special characters are valid.", txtbLastName);
+            }
+
+            try
+            {
+                //Parsing the input to integer
+                numberClasses = int.Parse(txtbNumberClasses.Text.Trim());
+
+                //Verifying if the number is greater or equal to 1
+                if(ValidationHelper.ValidateNumber(numberClasses) == true)
+                {
+                    numberOfClasses = numberClasses.ToString();
+                }
+                else
+                {
+                    ErrorMessage("Invalid number of Classes. Input only whole numbers greater or equal to 1", txtbNumberClasses);
+                }
+            }
+            catch(FormatException ex)
+            {
+                ErrorMessage("Invalid number of Classes. Input only whole numbers greater or equal to 1", txtbNumberClasses);
+            }
+
+            try
+            {
+                //Parsing the input to integer
+                perClass = int.Parse(txtbTotalPerClass.Text.Trim());
+
+                //Verifying if the number is greater or equal to 1
+                if (ValidationHelper.ValidateNumber(perClass) == true)
+                {
+                    totalPerClass = perClass.ToString("C2");
+                }
+                else
+                {
+                    ErrorMessage("Invalid total per Class. Input only whole numbers greater or equal to 1", txtbTotalPerClass);
+                }
+            }
+            catch (FormatException ex)
+            {
+                ErrorMessage("Invalid total per Class. Input only whole numbers greater or equal to 1", txtbTotalPerClass);
+            }
+
+            try
+            {
+                //Parsing the input to integer
+                totalClasses = int.Parse(txtbTotalAllClasses.Text.Trim());
+
+                //Verifying if the number is greater or equal to 1
+                if (ValidationHelper.ValidateNumber(totalClasses) == true)
+                {
+                    //Verifying if the input is equal to the product of number of classes and total per class
+                    if (totalClasses == int.Parse(txtbNumberClasses.Text.Trim()) * int.Parse(txtbTotalPerClass.Text.Trim()))
+                    {
+                        totalAllClasses = totalClasses.ToString("C2");
+                    }
+                    else
+                    {
+                        ErrorMessage("The total of all Classes is not the product of number of classes and total per class", txtbTotalAllClasses);
+                    }
+                }
+                else
+                {
+                    ErrorMessage("Invalid total per Class. Input only whole numbers greater or equal to 1", txtbTotalAllClasses);
+                }
+            }
+            catch (FormatException ex)
+            {
+                ErrorMessage("Invalid total per Class. Input only whole numbers greater or equal to 1", txtbTotalAllClasses);
+            }
+
+            //Verifying if the total paid is empty/null
+            if (txtbTotalPaid.Text == null || txtbTotalPaid.Text == "")
+            {
+                ErrorMessage("Total paid empty. If no amount was paid, please insert 0", txtbTotalPaid);
+            }
+            else
+            {
+                try
+                {
+                    totalPaid = int.Parse(txtbTotalPaid.Text.Trim());
+                    //Verifying if the amount is equal or greater than 0
+                    if(totalPaid >= 0)
+                    {
+                        totalAmountPaid = totalPaid.ToString("C2");
+                    }
+                    else
+                    {
+                        ErrorMessage("Invalid number. Must be equal or greater than 0", txtbTotalPaid);
+                    }
+                }
+                catch (FormatException ex)
+                {
+                    ErrorMessage("Invalid total paid. Please insert only numbers", txtbTotalPaid);
+                }
+            }
+        }
+
+        private void gpbMessages_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }
