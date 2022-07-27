@@ -311,7 +311,6 @@
             this.gpbMessages.TabIndex = 28;
             this.gpbMessages.TabStop = false;
             this.gpbMessages.Text = "Messages";
-            this.gpbMessages.Enter += new System.EventHandler(this.gpbMessages_Enter);
             // 
             // lblErrorMessageFour
             // 

@@ -38,6 +38,7 @@ namespace fileRecordAssignment3
             }
         }
 
+        //Method to validate the name with minimum 2 characters, maximum 12 without numbers or special characters
         public static Boolean ValidateName (string name)
         {
             Regex validName = new Regex(@"^[a-zA-Z]{2,12}$");
@@ -52,5 +53,20 @@ namespace fileRecordAssignment3
             }
 
         }
+
+        //Method to validate the number. Must be equal or greater than 1
+        public static Boolean ValidateNumber (int input)
+        {
+            if(input >= 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
     }
 }

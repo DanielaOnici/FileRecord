@@ -1,14 +1,14 @@
-    /*  fileRecordAssignment3.sln
-     * 
-     *  The program manages records of a member
-     * 
-     *  Daniela Onici
-     *  Student ID# 8754297
-     *  
-     *  2022/07/25: created
-     *  2022/07/27: finished
-     * 
-     */
+/*  fileRecordAssignment3.sln
+ * 
+ *  The program manages records of a member
+ * 
+ *  Daniela Onici
+ *  Student ID# 8754297
+ *  
+ *  2022/07/25: created
+ *  2022/07/27: finished
+ * 
+ */
 
 
 namespace fileRecordAssignment3
@@ -55,8 +55,8 @@ namespace fileRecordAssignment3
                 {
                     //When the file doesn't exist, it is created with the first row and a message is shown to the user
                     using (FileStream newFile = File.Create(path))
-                    MessageBox.Show("A new file has been created succesfully");
-                    StreamWriter writer = new StreamWriter(path, append:true);
+                        MessageBox.Show("A new file has been created succesfully");
+                    StreamWriter writer = new StreamWriter(path, append: true);
                     writer.Write("Member ID       First Name       Last Name          Date Registered         Number of Classes         Total Cost per Class          Total of all Classes            Total Paid          Amount Outstanding\n");
                     writer.Dispose();
 
@@ -86,8 +86,9 @@ namespace fileRecordAssignment3
 
         private void btnAddUpdate_Click(object sender, EventArgs e)
         {
-            string firstName = "", lastName = "", numberOfClasses = "", totalPerClass = "", totalAllClasses = "", totalAmountPaid = "", amountOutstanding;
+            string firstName, lastName, dateRegistered, numberOfClasses, totalPerClass, totalAllClasses, totalAmountPaid, amountOutstanding;
             int numberClasses, perClass, totalClasses, totalPaid, amountOut;
+            DateTime dateReg;
 
             //Verifying if the First Name is valid
             if (ValidationHelper.ValidateName(txtbFirstName.Text.Trim()) == true)
@@ -113,11 +114,29 @@ namespace fileRecordAssignment3
 
             try
             {
+                dateReg = DateTime.Parse(txtbDateRegistered.Text.Trim());
+
+                if (dateReg > DateTime.Today)
+                {
+                    ErrorMessage("Invalid date. Date can't be in the future", txtbDateRegistered);
+                }
+                else
+                {
+                    dateRegistered = dateReg.ToString("d");
+                }
+            }
+            catch (Exception)
+            {
+                ErrorMessage("Invalid date. Input date in the format yyyy/mm/dd", txtbDateRegistered);
+            }
+
+            try
+            {
                 //Parsing the input to integer
                 numberClasses = int.Parse(txtbNumberClasses.Text.Trim());
 
                 //Verifying if the number is greater or equal to 1
-                if(ValidationHelper.ValidateNumber(numberClasses) == true)
+                if (ValidationHelper.ValidateNumber(numberClasses) == true)
                 {
                     numberOfClasses = numberClasses.ToString();
                 }
@@ -126,7 +145,7 @@ namespace fileRecordAssignment3
                     ErrorMessage("Invalid number of Classes. Input only whole numbers greater or equal to 1", txtbNumberClasses);
                 }
             }
-            catch(FormatException ex)
+            catch (FormatException)
             {
                 ErrorMessage("Invalid number of Classes. Input only whole numbers greater or equal to 1", txtbNumberClasses);
             }
@@ -146,7 +165,7 @@ namespace fileRecordAssignment3
                     ErrorMessage("Invalid total per Class. Input only whole numbers greater or equal to 1", txtbTotalPerClass);
                 }
             }
-            catch (FormatException ex)
+            catch (FormatException)
             {
                 ErrorMessage("Invalid total per Class. Input only whole numbers greater or equal to 1", txtbTotalPerClass);
             }
@@ -174,7 +193,7 @@ namespace fileRecordAssignment3
                     ErrorMessage("Invalid total per Class. Input only whole numbers greater or equal to 1", txtbTotalAllClasses);
                 }
             }
-            catch (FormatException ex)
+            catch (FormatException)
             {
                 ErrorMessage("Invalid total per Class. Input only whole numbers greater or equal to 1", txtbTotalAllClasses);
             }
@@ -190,7 +209,7 @@ namespace fileRecordAssignment3
                 {
                     totalPaid = int.Parse(txtbTotalPaid.Text.Trim());
                     //Verifying if the amount is equal or greater than 0
-                    if(totalPaid >= 0)
+                    if (totalPaid >= 0)
                     {
                         totalAmountPaid = totalPaid.ToString("C2");
                     }
@@ -199,7 +218,7 @@ namespace fileRecordAssignment3
                         ErrorMessage("Invalid number. Must be equal or greater than 0", txtbTotalPaid);
                     }
                 }
-                catch (FormatException ex)
+                catch (FormatException)
                 {
                     ErrorMessage("Invalid total paid. Please insert only numbers", txtbTotalPaid);
                 }
@@ -213,26 +232,29 @@ namespace fileRecordAssignment3
                 {
                     try
                     {
-                        totalPaid = int.Parse(txtbTotalPaid.Text.Trim());
-                        //Verifying if the amount is equal or greater than 0
-                        if (totalPaid >= 0)
+                        amountOut = int.Parse(txtbAmountOut.Text.Trim());
+
+                        //Verifying if the amount is the difference between total paid and total of classes
+                        if (amountOut == int.Parse(txtbTotalPaid.Text.Trim()) - int.Parse(txtbTotalAllClasses.Text.Trim()))
                         {
-                            totalAmountPaid = totalPaid.ToString("C2");
+                            amountOutstanding = amountOut.ToString("C2");
+                        }
+                        else if (amountOut < 0)
+                        {
+                            amountOut = 0;
+                            amountOutstanding = amountOut.ToString("C2");
                         }
                         else
                         {
-                            ErrorMessage("Invalid number. Must be equal or greater than 0", txtbAmountOut);
+                            ErrorMessage("The amount outstanding isn't the difference between total paid and total of classes", txtbAmountOut);
                         }
                     }
-                    catch (FormatException ex)
+                    catch (FormatException)
                     {
-                        ErrorMessage("Invalid total paid. Please insert only numbers", txtbAmountOut);
+                        ErrorMessage("Invalid Amount Outstanding. Please insert only numbers", txtbAmountOut);
                     }
                 }
-        }
-
-        private void gpbMessages_Enter(object sender, EventArgs e)
-        {
+            }
 
         }
     }
