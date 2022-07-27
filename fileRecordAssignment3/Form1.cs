@@ -86,8 +86,8 @@ namespace fileRecordAssignment3
 
         private void btnAddUpdate_Click(object sender, EventArgs e)
         {
-            string firstName = "", lastName = "", numberOfClasses = "", totalPerClass = "", totalAllClasses = "", totalAmountPaid = "";
-            int numberClasses, perClass, totalClasses, totalPaid;
+            string firstName = "", lastName = "", numberOfClasses = "", totalPerClass = "", totalAllClasses = "", totalAmountPaid = "", amountOutstanding;
+            int numberClasses, perClass, totalClasses, totalPaid, amountOut;
 
             //Verifying if the First Name is valid
             if (ValidationHelper.ValidateName(txtbFirstName.Text.Trim()) == true)
@@ -203,7 +203,32 @@ namespace fileRecordAssignment3
                 {
                     ErrorMessage("Invalid total paid. Please insert only numbers", txtbTotalPaid);
                 }
-            }
+
+                //Verifying if the amount outstanding is empty/null
+                if (txtbAmountOut.Text == null || txtbAmountOut.Text == "")
+                {
+                    ErrorMessage("Amount outstanding empty. If 0, please insert 0", txtbAmountOut);
+                }
+                else
+                {
+                    try
+                    {
+                        totalPaid = int.Parse(txtbTotalPaid.Text.Trim());
+                        //Verifying if the amount is equal or greater than 0
+                        if (totalPaid >= 0)
+                        {
+                            totalAmountPaid = totalPaid.ToString("C2");
+                        }
+                        else
+                        {
+                            ErrorMessage("Invalid number. Must be equal or greater than 0", txtbAmountOut);
+                        }
+                    }
+                    catch (FormatException ex)
+                    {
+                        ErrorMessage("Invalid total paid. Please insert only numbers", txtbAmountOut);
+                    }
+                }
         }
 
         private void gpbMessages_Enter(object sender, EventArgs e)
