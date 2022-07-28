@@ -126,6 +126,7 @@
             this.btnExit.TabIndex = 6;
             this.btnExit.Text = "Exit";
             this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // txtbMemberId
             // 
@@ -380,6 +381,7 @@
             this.Controls.Add(this.rtxtbRecords);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.gpbMessages.ResumeLayout(false);
             this.gpbMessages.PerformLayout();
             this.ResumeLayout(false);

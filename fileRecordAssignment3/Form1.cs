@@ -47,7 +47,6 @@ namespace fileRecordAssignment3
             string record = "";
             string path = @txtbPathName.Text;
 
-
             try
             {
                 //Checking if the file exists
@@ -56,39 +55,111 @@ namespace fileRecordAssignment3
                     //When the file doesn't exist, it is created with the first row and a message is shown to the user
                     using (FileStream newFile = File.Create(path))
                         MessageBox.Show("A new file has been created succesfully");
-                    StreamWriter writer = new StreamWriter(path, append: true);
-                    writer.Write("Member ID       First Name       Last Name          Date Registered         Number of Classes         Total Cost per Class          Total of all Classes            Total Paid          Amount Outstanding\n");
-                    writer.Dispose();
 
+                    rtxtbRecords.Width = 810;
+
+                    StreamWriter writer = new StreamWriter(path, append: true);
+                    writer.Write("Member ID\tFirst Name\tLast Name\tDate Registered\tNumber of Classes\tTotal Cost per Class\tTotal of all Classes\tTotal Paid\tAmount Outstanding\n");
+                    rtxtbRecords.SelectAll();
+                    rtxtbRecords.SelectionTabs = new int[] { 90, 90, 90, 90, 90, 90, 90, 90, 90};
+                    rtxtbRecords.AcceptsTab = true;
+                    rtxtbRecords.Select(0, 0);
+                    writer.Flush();
+                    writer.Close();
                 }
                 else
                 {
-                    //When the file exists, the content is displayed in the richTextBox
-                    StreamReader reader = new StreamReader(path);
-                    record = reader.ReadToEnd();
-                    rtxtbRecords.Text = record;
-                    reader.Dispose();
+                    //If the file exists and it is empty, the columns are created
+                    if(new FileInfo(path).Length == 0)
+                    {
+                        StreamWriter writer = new StreamWriter(path, append: true);
+                        writer.Write("Member ID\tFirst Name\tLast Name\tDate Registered\tNumber of Classes\tTotal Cost per Class\tTotal of all Classes\tTotal Paid\tAmount Outstanding\n");
+                        rtxtbRecords.SelectAll();
+                        rtxtbRecords.SelectionTabs = new int[] { 90, 90, 90, 90, 90, 90, 90, 90, 90 };
+                        rtxtbRecords.AcceptsTab = true;
+                        rtxtbRecords.Select(0, 0);
+                        writer.Flush();
+                        writer.Close();
+                    }
+                    else
+                    {
+                        //When the file exists, the content is displayed in the richTextBox
+                        StreamReader reader = new StreamReader(path);
+                        record = reader.ReadToEnd();
+                        rtxtbRecords.Text = record;
+                        reader.Dispose();
+                    }
                 }
             }
-            catch (FileNotFoundException ex)
+            catch (DirectoryNotFoundException)
             {
-                MessageBox.Show(ex.Message);
+                ErrorMessage("Directory not found)", txtbPathName);
             }
             catch (IOException ex)
             {
-                MessageBox.Show(ex.Message);
+                ErrorMessage(ex.Message, txtbPathName);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                ErrorMessage(ex.Message, txtbPathName);
             }
         }
 
         private void btnAddUpdate_Click(object sender, EventArgs e)
         {
-            string firstName, lastName, dateRegistered, numberOfClasses, totalPerClass, totalAllClasses, totalAmountPaid, amountOutstanding;
+            //Cleaning any error messages before validations
+            lblErrorMessageOne.Text = "";
+            lblErrorMessageTwo.Text = "";
+            lblErrorMessageThree.Text = "";
+            lblErrorMessageFour.Text = "";
+
+
+            string firstName = "", lastName = "", dateRegistered = "", numberOfClasses = "", totalPerClass = "", totalAllClasses = "", totalAmountPaid = "", amountOutstanding = "", memberID = "";
             int numberClasses, perClass, totalClasses, totalPaid, amountOut;
             DateTime dateReg;
+
+            try
+            {
+                FileStream fs = new FileStream(txtbPathName.Text, FileMode.Open, FileAccess.Read);
+                StreamReader sr = new StreamReader(fs);
+                String str = sr.ReadToEnd();
+                int i = (str.IndexOf(txtbMemberId.Text.Trim().ToUpper(), 0));
+
+                if (ValidationHelper.ValidateMember(txtbMemberId.Text.Trim().ToUpper()) == true)
+                {
+                    if (i > -1)
+                    {
+                        ErrorMessage("The memberID already exists. Follow the pattern (2letters, 4numbers, Initials of the name)", txtbMemberId);
+                    }
+                    else
+                    {
+                        if (ValidationHelper.ValidateInitials(txtbMemberId.Text.Trim().ToUpper(), txtbFirstName.Text.Trim().ToUpper(), txtbLastName.Text.Trim().ToUpper()) == true)
+                        {
+                            memberID = txtbMemberId.Text.Trim().ToUpper();
+                        }
+                        else
+                        {
+                            ErrorMessage("The last 2 letters of the member ID doesn't match the Initials of First Name and Last Name", txtbMemberId);
+                        }
+                    }
+                }
+                else
+                {
+                    ErrorMessage("Create memberID following the pattern (2letters, 4numbers, Initials of the name)", txtbMemberId);
+                }
+
+                fs.Close();
+                sr.Close();
+            }
+            catch(IOException ex)
+            {
+                ErrorMessage(ex.Message, txtbMemberId);
+            }
+            catch (Exception)
+            {
+                ErrorMessage("Create memberID following the pattern (2letters, 4numbers, Initials of the name)", txtbMemberId);
+            }
+
 
             //Verifying if the First Name is valid
             if (ValidationHelper.ValidateName(txtbFirstName.Text.Trim()) == true)
@@ -116,6 +187,7 @@ namespace fileRecordAssignment3
             {
                 dateReg = DateTime.Parse(txtbDateRegistered.Text.Trim());
 
+                //Verifying if the date is not in the future
                 if (dateReg > DateTime.Today)
                 {
                     ErrorMessage("Invalid date. Date can't be in the future", txtbDateRegistered);
@@ -145,7 +217,7 @@ namespace fileRecordAssignment3
                     ErrorMessage("Invalid number of Classes. Input only whole numbers greater or equal to 1", txtbNumberClasses);
                 }
             }
-            catch (FormatException)
+            catch (Exception)
             {
                 ErrorMessage("Invalid number of Classes. Input only whole numbers greater or equal to 1", txtbNumberClasses);
             }
@@ -165,7 +237,7 @@ namespace fileRecordAssignment3
                     ErrorMessage("Invalid total per Class. Input only whole numbers greater or equal to 1", txtbTotalPerClass);
                 }
             }
-            catch (FormatException)
+            catch (Exception)
             {
                 ErrorMessage("Invalid total per Class. Input only whole numbers greater or equal to 1", txtbTotalPerClass);
             }
@@ -193,7 +265,7 @@ namespace fileRecordAssignment3
                     ErrorMessage("Invalid total per Class. Input only whole numbers greater or equal to 1", txtbTotalAllClasses);
                 }
             }
-            catch (FormatException)
+            catch (Exception)
             {
                 ErrorMessage("Invalid total per Class. Input only whole numbers greater or equal to 1", txtbTotalAllClasses);
             }
@@ -218,44 +290,89 @@ namespace fileRecordAssignment3
                         ErrorMessage("Invalid number. Must be equal or greater than 0", txtbTotalPaid);
                     }
                 }
-                catch (FormatException)
+                catch (Exception)
                 {
                     ErrorMessage("Invalid total paid. Please insert only numbers", txtbTotalPaid);
                 }
 
-                //Verifying if the amount outstanding is empty/null
-                if (txtbAmountOut.Text == null || txtbAmountOut.Text == "")
-                {
-                    ErrorMessage("Amount outstanding empty. If 0, please insert 0", txtbAmountOut);
-                }
-                else
-                {
-                    try
-                    {
-                        amountOut = int.Parse(txtbAmountOut.Text.Trim());
+            }
 
-                        //Verifying if the amount is the difference between total paid and total of classes
-                        if (amountOut == int.Parse(txtbTotalPaid.Text.Trim()) - int.Parse(txtbTotalAllClasses.Text.Trim()))
-                        {
-                            amountOutstanding = amountOut.ToString("C2");
-                        }
-                        else if (amountOut < 0)
-                        {
-                            amountOut = 0;
-                            amountOutstanding = amountOut.ToString("C2");
-                        }
-                        else
-                        {
-                            ErrorMessage("The amount outstanding isn't the difference between total paid and total of classes", txtbAmountOut);
-                        }
-                    }
-                    catch (FormatException)
+            //Verifying if the amount outstanding is empty/null
+            if (txtbAmountOut.Text == null || txtbAmountOut.Text == "")
+            {
+                ErrorMessage("Amount outstanding empty. If 0, please insert 0", txtbAmountOut);
+            }
+            else
+            {
+                try
+                {
+                    amountOut = int.Parse(txtbAmountOut.Text.Trim());
+
+                    //Verifying if the amount is the difference between total paid and total of classes
+                    if (amountOut == int.Parse(txtbTotalAllClasses.Text.Trim()) - int.Parse(txtbTotalPaid.Text.Trim()))
                     {
-                        ErrorMessage("Invalid Amount Outstanding. Please insert only numbers", txtbAmountOut);
+                        amountOutstanding = int.Parse(txtbAmountOut.Text.Trim()).ToString("C2");
                     }
+                    else if (amountOut <= 0)
+                    {
+                        amountOut = 0;
+                        amountOutstanding = int.Parse(txtbAmountOut.Text.Trim()).ToString("C2");
+                    }
+                    else
+                    {
+                        ErrorMessage("The amount outstanding isn't the difference between total of classes and total paid", txtbAmountOut);
+                    }
+                }
+                catch (Exception)
+                {
+                    ErrorMessage("Invalid Amount Outstanding. Please insert only numbers", txtbAmountOut);
                 }
             }
 
+            string path = @txtbPathName.Text;
+            try
+            {
+                //Registering data into the file when there is no error message
+                if (lblErrorMessageOne.Text == null || lblErrorMessageOne.Text == "")
+                {
+                    StreamWriter writer = new StreamWriter(path, append: true);
+                    writer.Write($"{memberID};\t{firstName};\t{lastName};\t{dateRegistered};\t{numberOfClasses};\t{totalPerClass}\t{totalAllClasses};\t{totalAmountPaid};\t{amountOutstanding}\n");
+                    rtxtbRecords.SelectAll();
+                    rtxtbRecords.SelectionTabs = new int[] { 90, 90, 90, 90, 90, 90, 90, 90, 90 };
+                    rtxtbRecords.AcceptsTab = true;
+                    rtxtbRecords.Select(0, 0);
+                    writer.Flush();
+                    writer.Close();
+
+                    //Displaying the data after saving it
+                    StreamReader reader = new StreamReader(path);
+                    string record = reader.ReadToEnd();
+                    rtxtbRecords.Text = record;
+                    reader.Dispose();
+                    reader.Close();
+                }
+            }
+            catch(IOException ex)
+            {
+                ErrorMessage(ex.Message, txtbMemberId);
+            }
+            catch(Exception ex)
+            {
+                ErrorMessage(ex.Message, txtbMemberId);
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            //Turning the Rich Text Box to read-only
+            rtxtbRecords.ReadOnly = true;
+            rtxtbRecords.Enabled = false;
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            //Exiting the program
+            Close();
         }
     }
 }
