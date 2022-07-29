@@ -1,0 +1,3 @@
+Member ID;First Name;Last Name;Date Registered;Number of Classes;Total Cost per Class;Total of all Classes;Total Paid;Amount Outstanding
+DA8585DA;DA;AD;2022-05-05;1;$10.00;$10.00;$0.00;$0.00
+
